@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8044:80"
+    depends_on:
+      - php
+    volumes:
+      - ./nginx/conf.d/site.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/conf.d/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./../:/app/
+#
+#  db:
+#    build:
+#      context: ./postgres/
+#      dockerfile: Dockerfile
+#    env_file: ./../.env
+#    volumes:
+#      - ./postgres/backup:/backup
+#      - ./postgres/data:/var/lib/postgresql/data
+#
+#  redis:
+#    build:
+#      context: ./redis/
+#      dockerfile: Dockerfile
+#    command: ["redis-server", "/etc/redis/redis.conf"]
+#    volumes:
+#      - ./redis/data:/data
+#      - ./redis/config/redis.conf:/etc/redis/redis.conf
+
+
+  php:
+    build:
+      context: ./php-fpm/
+      dockerfile: Dockerfile
+    hostname: php
+    volumes:
+      - ./../:/app:cached
+#    depends_on:
+#      - db
+#      - redis

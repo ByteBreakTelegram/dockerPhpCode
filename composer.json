@@ -1,0 +1,10 @@
+{
+    "name": "byte-break/simple",
+    "description": "A clean PHP project",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
